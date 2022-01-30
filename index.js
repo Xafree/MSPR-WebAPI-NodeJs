@@ -3,7 +3,7 @@ const jsforce = require('jsforce');
 const bodyParser = require('body-parser');
 require('dotenv').config();
 const app = express();
-const PORT = 3001;
+const PORT = 3050;
 // prueba
 
 const { SF_LOGIN_URL, SF_USERNAME, SF_PASSWORD, SF_TOKEN } = process.env;
@@ -18,13 +18,11 @@ connect.login(SF_USERNAME, SF_PASSWORD + SF_TOKEN, (err, userInfo) => {
     if (err) {
         console.error(err)
     } else {
-        console.log("User Id : " + userInfo.id)
-        console.log("Org Id : " + userInfo.organizationId)
+        console.log("Connect");
     }
 });
 
-
-app.get('/prospects', (req, res) => {
+app.get('/', (req, res) => {
     connect.query("Select First_Name__c, Email__c, Name FROM Prospect__c", (err, result) => {
         if (err) {
             res.send(err);
@@ -34,7 +32,6 @@ app.get('/prospects', (req, res) => {
         }
     })
 })
-
 
 app.post('/prospect', (req, res) => {
     connect.sobject('Prospect__c').create({
@@ -47,8 +44,7 @@ app.post('/prospect', (req, res) => {
     })
 })
 
-
 app.listen(PORT, () => {
     console.log(`Serveur is running at http://localhost:${PORT}`);
 })
-
+module.exports = app.listen(3001);
