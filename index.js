@@ -5,6 +5,7 @@ require('dotenv').config();
 const app = express();
 const PORT = 3001;
 // prueba
+
 const { SF_LOGIN_URL, SF_USERNAME, SF_PASSWORD, SF_TOKEN } = process.env;
 const connect = new jsforce.Connection({
     loginUrl: SF_LOGIN_URL
@@ -45,8 +46,6 @@ app.post('/prospect', (req, res) => {
         res.status(422).send(err);
     })
 })
-
-
 
 
 app.listen(PORT, () => {
